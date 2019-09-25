@@ -25,8 +25,7 @@ namespace Pong
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, uint windowStyle);
 
-        const uint SWP_NOSIZE = 0x0001;
-        const uint SWP_NOZORDER = 0x0004;
+
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -72,16 +71,15 @@ namespace Pong
             int playerTwoScore = 0;
             int xDirrection = 1;
             int yDirrection = 1;
-            int speedY = 1;
-            int speedX = 1;
 
-            int playerSpeed = 2;
-            int ballSpeed = 4;
+
+            int playerSpeed = 14;
+            int ballSpeed = 8;
 
             int screenWidth = int.Parse(Screen.PrimaryScreen.Bounds.Width.ToString());
             int screenHeight = int.Parse(Screen.PrimaryScreen.Bounds.Height.ToString());
-            speedX = screenWidth / 2;
-            speedY = screenHeight / 2;
+            int speedX = screenWidth / 2;
+            int speedY = screenHeight / 2;
 
 
             int x = 0;
@@ -96,15 +94,15 @@ namespace Pong
                 screenWidth = int.Parse(Screen.PrimaryScreen.Bounds.Width.ToString());
                 screenHeight = int.Parse(Screen.PrimaryScreen.Bounds.Height.ToString());
 
-                x = screenHeight/2 +w;
-               
+                x = screenHeight / 2 + w;
+
                 GetWindowRect(PlayerOne.MainWindowHandle, ref playerOneRct);
 
-                if (Keyboard.IsKeyDown(Key.Up) && playerOneRct.Top != 0)
+                if (Keyboard.IsKeyDown(Key.Up) && !(playerOneRct.Top <= 0))
                 {
                     SetWindowPos(PlayerOne.MainWindowHandle, new IntPtr(-1), screenWidth - 100, playerOneRct.Top - playerSpeed, 100, 200, 0x0040);
                 }
-                if (Keyboard.IsKeyDown(Key.Down) && playerOneRct.Top != screenHeight - 10)
+                if (Keyboard.IsKeyDown(Key.Down) && !(playerOneRct.Top >= screenHeight - 10))
                 {
                     SetWindowPos(PlayerOne.MainWindowHandle, new IntPtr(-1), screenWidth - 100, playerOneRct.Top + playerSpeed, 100, 200, 0x0040);
                 }
@@ -122,11 +120,11 @@ namespace Pong
                     Pong.Kill();
                     Environment.Exit(0);
                 }
-                if (Keyboard.IsKeyDown(Key.W) && playerTwoRct.Top != 0)
+                if (Keyboard.IsKeyDown(Key.W) && !(playerTwoRct.Top <= 0))
                 {
                     SetWindowPos(playerTwo.MainWindowHandle, new IntPtr(-1), 0, playerTwoRct.Top - playerSpeed, 100, 200, 0x0040);
                 }
-                if (Keyboard.IsKeyDown(Key.S) && playerTwoRct.Top != screenHeight - 10)
+                if (Keyboard.IsKeyDown(Key.S) && !(playerTwoRct.Top >= screenHeight - 10))
                 {
                     SetWindowPos(playerTwo.MainWindowHandle, new IntPtr(-1), 0, playerTwoRct.Top + playerSpeed, 100, 200, 0x0040);
                 }
@@ -184,32 +182,49 @@ namespace Pong
                 ShowWindow(Pong.Handle, 5);
 
 
-                if (Keyboard.IsKeyDown(Key.I))
+                if (Keyboard.IsKeyDown(Key.L))
                 {
-                    playerSpeed++;
+                    Thread.Sleep(50);
+                    if (Keyboard.IsKeyUp(Key.L))
+                    {
+                        playerSpeed++;
+                    }
                 }
                 else if (Keyboard.IsKeyDown(Key.K))
                 {
-                    playerSpeed--;
-                }            
-                else if (Keyboard.IsKeyDown(Key.L))
-                {
-                    ballSpeed--;
-                }            
-                if (Keyboard.IsKeyDown(Key.O))
-                {
-                    ballSpeed++;
+                    Thread.Sleep(50);
+                    if (Keyboard.IsKeyUp(Key.K))
+                    {
+                        playerSpeed--;
+                    }
                 }
-             
+                else if (Keyboard.IsKeyDown(Key.O))
+                {
+                    Thread.Sleep(50);
+                    if (Keyboard.IsKeyUp(Key.O))
+                    {
+                        ballSpeed--;
+                    }
+                }
+                if (Keyboard.IsKeyDown(Key.P))
+                {
+                    Thread.Sleep(50);
+                    if (Keyboard.IsKeyUp(Key.P))
+                    {
+                        ballSpeed++;
+                    }
+
+                }
+
                 SetWindowPos(Process.GetCurrentProcess().MainWindowHandle, new IntPtr(-1), x, y, w, h, 0x0040);
 
                 Console.Clear();
                 //  Console.WriteLine("x: " + x + "\n" + "y: " + y + "h: " + h + "\n" + "w: " + w);
-                Console.WriteLine("SCORE\nplayer1: " + playerOneScore + "\n" + "player2: " + playerTwoScore);
+                Console.WriteLine("SCORE\nplayer1: " + playerOneScore + "\n" + "player2: " + playerTwoScore + "\n" + "ball speed: " + ballSpeed + "(O- P+) \n" + "player speed: " + playerSpeed + "(K- L+) \n Exit with Escape");
                 speedX += ballSpeed * xDirrection;
                 speedY += ballSpeed * yDirrection;
                 Thread.Sleep(5);
-                
+
                 SetWindowPos(Pong.MainWindowHandle, new IntPtr(-1), speedX, speedY, 10, 10, 0x0040);
 
 
