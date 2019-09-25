@@ -1,0 +1,7 @@
+C:\Users\René Češka\source\repos\NotePong\NotePong\bin\Release\Pong.exe.config
+C:\Users\René Češka\source\repos\NotePong\NotePong\bin\Release\Pong.exe
+C:\Users\René Češka\source\repos\NotePong\NotePong\bin\Release\Pong.pdb
+C:\Users\René Češka\source\repos\NotePong\NotePong\obj\Release\NotePong.csprojAssemblyReference.cache
+C:\Users\René Češka\source\repos\NotePong\NotePong\obj\Release\NotePong.csproj.CoreCompileInputs.cache
+C:\Users\René Češka\source\repos\NotePong\NotePong\obj\Release\Pong.exe
+C:\Users\René Češka\source\repos\NotePong\NotePong\obj\Release\Pong.pdb

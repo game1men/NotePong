@@ -1,0 +1,7 @@
+C:\Users\René Češka\source\repos\virus app\Pong\bin\Debug\Pong.exe.config
+C:\Users\René Češka\source\repos\virus app\Pong\bin\Debug\Pong.exe
+C:\Users\René Češka\source\repos\virus app\Pong\bin\Debug\Pong.pdb
+C:\Users\René Češka\source\repos\virus app\Pong\obj\Debug\Pong.csproj.CoreCompileInputs.cache
+C:\Users\René Češka\source\repos\virus app\Pong\obj\Debug\Pong.exe
+C:\Users\René Češka\source\repos\virus app\Pong\obj\Debug\Pong.pdb
+C:\Users\René Češka\source\repos\virus app\Pong\obj\Debug\Pong.csprojAssemblyReference.cache

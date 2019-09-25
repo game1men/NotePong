@@ -52,20 +52,20 @@ namespace Pong
         public void Start()
         {
             //starts notepad window for player one
-            Process PlayerOne = new Process();
-            PlayerOne.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-            PlayerOne.StartInfo.FileName = "C:\\Windows\\notepad.exe";
-            PlayerOne.Start();
+            Process playerOne = new Process();
+            playerOne.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+            playerOne.StartInfo.FileName = "C:\\Windows\\notepad.exe";
+            playerOne.Start();
             //starts notepad window for player two
             Process playerTwo = new Process();
             playerTwo.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
             playerTwo.StartInfo.FileName = "C:\\Windows\\notepad.exe";
             playerTwo.Start();
             //starts notepad window for ball
-            Process Pong = new Process();
-            Pong.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-            Pong.StartInfo.FileName = "C:\\Windows\\notepad.exe";
-            Pong.Start();
+            Process ball = new Process();
+            ball.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+            ball.StartInfo.FileName = "C:\\Windows\\notepad.exe";
+            ball.Start();
 
             int playerOneScore = 0;
             int playerTwoScore = 0;
@@ -78,11 +78,11 @@ namespace Pong
 
             int screenWidth = int.Parse(Screen.PrimaryScreen.Bounds.Width.ToString());
             int screenHeight = int.Parse(Screen.PrimaryScreen.Bounds.Height.ToString());
-            int speedX = screenWidth / 2;
-            int speedY = screenHeight / 2;
+            int ballX = screenWidth / 2;
+            int ballY = screenHeight / 2;
 
 
-            int x = 0;
+            int x;
             int y = 0;
             int w = 200;
             int h = 150;
@@ -96,28 +96,27 @@ namespace Pong
 
                 x = screenHeight / 2 + w;
 
-                GetWindowRect(PlayerOne.MainWindowHandle, ref playerOneRct);
+                GetWindowRect(playerOne.MainWindowHandle, ref playerOneRct);
 
                 if (Keyboard.IsKeyDown(Key.Up) && !(playerOneRct.Top <= 0))
                 {
-                    SetWindowPos(PlayerOne.MainWindowHandle, new IntPtr(-1), screenWidth - 100, playerOneRct.Top - playerSpeed, 100, 200, 0x0040);
+                    SetWindowPos(playerOne.MainWindowHandle, new IntPtr(-1), screenWidth - 100, playerOneRct.Top - playerSpeed, 100, 200, 0x0040);
                 }
                 if (Keyboard.IsKeyDown(Key.Down) && !(playerOneRct.Top >= screenHeight - 10))
                 {
-                    SetWindowPos(PlayerOne.MainWindowHandle, new IntPtr(-1), screenWidth - 100, playerOneRct.Top + playerSpeed, 100, 200, 0x0040);
+                    SetWindowPos(playerOne.MainWindowHandle, new IntPtr(-1), screenWidth - 100, playerOneRct.Top + playerSpeed, 100, 200, 0x0040);
                 }
 
 
-                screenWidth = int.Parse(Screen.PrimaryScreen.Bounds.Width.ToString());
-                screenHeight = int.Parse(Screen.PrimaryScreen.Bounds.Height.ToString());
+               
 
                 GetWindowRect(playerTwo.MainWindowHandle, ref playerTwoRct);
                 //ConsoleKeyInfo key = Console.Read();
                 if (Keyboard.IsKeyDown(Key.Escape))
                 {
-                    PlayerOne.Kill();
+                    playerOne.Kill();
                     playerTwo.Kill();
-                    Pong.Kill();
+                    ball.Kill();
                     Environment.Exit(0);
                 }
                 if (Keyboard.IsKeyDown(Key.W) && !(playerTwoRct.Top <= 0))
@@ -132,7 +131,7 @@ namespace Pong
                 screenWidth = int.Parse(Screen.PrimaryScreen.Bounds.Width.ToString());
                 screenHeight = int.Parse(Screen.PrimaryScreen.Bounds.Height.ToString());
 
-                GetWindowRect(Pong.MainWindowHandle, ref pongRtc);
+                GetWindowRect(ball.MainWindowHandle, ref pongRtc);
 
                 if (pongRtc.Top > screenHeight - 50)
                 {
@@ -165,21 +164,21 @@ namespace Pong
                 {
 
                     playerTwoScore++;
-                    speedX = screenWidth / 2;
-                    speedY = screenHeight / 2;
+                    ballX = screenWidth / 2;
+                    ballY = screenHeight / 2;
                 }
 
 
                 if (pongRtc.Left < -20)
                 {
                     playerOneScore++;
-                    speedX = screenWidth / 2;
-                    speedY = screenHeight / 2;
+                    ballX = screenWidth / 2;
+                    ballY = screenHeight / 2;
                 }
 
-                ShowWindow(PlayerOne.Handle, 5);
+                ShowWindow(playerOne.Handle, 5);
                 ShowWindow(playerTwo.Handle, 5);
-                ShowWindow(Pong.Handle, 5);
+                ShowWindow(ball.Handle, 5);
 
 
                 if (Keyboard.IsKeyDown(Key.L))
@@ -221,11 +220,11 @@ namespace Pong
                 Console.Clear();
                 //  Console.WriteLine("x: " + x + "\n" + "y: " + y + "h: " + h + "\n" + "w: " + w);
                 Console.WriteLine("SCORE\nplayer1: " + playerOneScore + "\n" + "player2: " + playerTwoScore + "\n" + "ball speed: " + ballSpeed + "(O- P+) \n" + "player speed: " + playerSpeed + "(K- L+) \n Exit with Escape");
-                speedX += ballSpeed * xDirrection;
-                speedY += ballSpeed * yDirrection;
+                ballX += ballSpeed * xDirrection;
+                ballY += ballSpeed * yDirrection;
                 Thread.Sleep(5);
 
-                SetWindowPos(Pong.MainWindowHandle, new IntPtr(-1), speedX, speedY, 10, 10, 0x0040);
+                SetWindowPos(ball.MainWindowHandle, new IntPtr(-1), ballX, ballY, 10, 10, 0x0040);
 
 
 
